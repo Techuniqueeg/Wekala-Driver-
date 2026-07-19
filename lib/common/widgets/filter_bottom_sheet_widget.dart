@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart_delivery/common/widgets/custom_button_widget.dart';
-import 'package:sixam_mart_delivery/common/widgets/custom_drop_down_button.dart';
-import 'package:sixam_mart_delivery/features/refer_and_earn/controllers/refer_and_earn_controller.dart';
-import 'package:sixam_mart_delivery/util/dimensions.dart';
-import 'package:sixam_mart_delivery/util/styles.dart';
+import 'package:wekala_delivery/common/widgets/custom_button_widget.dart';
+import 'package:wekala_delivery/common/widgets/custom_drop_down_button.dart';
+import 'package:wekala_delivery/features/refer_and_earn/controllers/refer_and_earn_controller.dart';
+import 'package:wekala_delivery/util/dimensions.dart';
+import 'package:wekala_delivery/util/styles.dart';
 import 'package:intl/intl.dart';
 
 class FilterBottomSheetWidget extends StatefulWidget {
-  final Function(String? dateRange, String? startDate, String? endDate)? onApply;
+  final Function(String? dateRange, String? startDate, String? endDate)?
+  onApply;
   final VoidCallback? onReset;
   final String? startDate;
   final String? endDate;
@@ -17,17 +18,21 @@ class FilterBottomSheetWidget extends StatefulWidget {
   const FilterBottomSheetWidget({
     super.key,
     this.onApply,
-    this.onReset, this.startDate, this.endDate, this.type,
+    this.onReset,
+    this.startDate,
+    this.endDate,
+    this.type,
   });
 
   @override
-  State<FilterBottomSheetWidget> createState() => _FilterBottomSheetWidgetState();
+  State<FilterBottomSheetWidget> createState() =>
+      _FilterBottomSheetWidgetState();
 }
 
 class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
   String? _selectedDateRange;
   DateTimeRange? _customDateRange;
-  
+
   final List<String> _dateRangeOptions = [
     'custom_date_range',
     'this_week',
@@ -38,16 +43,22 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
   @override
   void initState() {
     super.initState();
-    if(widget.startDate != null && widget.endDate != null && widget.startDate!.isNotEmpty && widget.endDate!.isNotEmpty) {
+    if (widget.startDate != null &&
+        widget.endDate != null &&
+        widget.startDate!.isNotEmpty &&
+        widget.endDate!.isNotEmpty) {
       DateTime start = DateTime.parse(widget.startDate!);
       DateTime end = DateTime.parse(widget.endDate!);
       _customDateRange = DateTimeRange(start: start, end: end);
     }
 
-    if(widget.type == 'custom') {
+    if (widget.type == 'custom') {
       _selectedDateRange = 'custom_date_range';
     } else {
-      _selectedDateRange = widget.type ?? Get.find<ReferAndEarnController>().dateRange ?? 'custom_date_range';
+      _selectedDateRange =
+          widget.type ??
+          Get.find<ReferAndEarnController>().dateRange ??
+          'custom_date_range';
     }
   }
 
@@ -107,7 +118,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          
+
           // Close button
           Align(
             alignment: Alignment.topRight,
@@ -119,7 +130,9 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
 
           // Title
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
+            padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.paddingSizeLarge,
+            ),
             child: Text(
               'filter_by'.tr,
               style: robotoBold.copyWith(
@@ -128,25 +141,33 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: Dimensions.paddingSizeLarge),
 
           // Content
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge),
+            padding: const EdgeInsets.symmetric(
+              horizontal: Dimensions.paddingSizeLarge,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Date Range Dropdown
                 CustomDropdownButton(
                   hintText: 'custom_date_range'.tr,
-                  dropdownMenuItems: _dateRangeOptions.map((range) => DropdownMenuItem<String>(
-                    value: range,
-                    child: Text(
-                      range.tr,
-                      style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeDefault),
-                    ),
-                  )).toList(),
+                  dropdownMenuItems: _dateRangeOptions
+                      .map(
+                        (range) => DropdownMenuItem<String>(
+                          value: range,
+                          child: Text(
+                            range.tr,
+                            style: robotoRegular.copyWith(
+                              fontSize: Dimensions.fontSizeDefault,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
                   isBorder: true,
                   backgroundColor: Theme.of(context).cardColor,
                   maxHeight: 100,
@@ -160,11 +181,11 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                   },
                   selectedValue: _selectedDateRange,
                 ),
-                
+
                 // Custom Date Range Picker
                 if (_selectedDateRange == 'custom_date_range') ...[
                   const SizedBox(height: Dimensions.paddingSizeDefault),
-                  
+
                   // Label
                   Text(
                     'custom_date_range'.tr,
@@ -174,31 +195,37 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                     ),
                   ),
                   const SizedBox(height: Dimensions.paddingSizeSmall),
-                  
+
                   // Date Range Input
                   InkWell(
                     onTap: _selectCustomDateRange,
                     child: Container(
-                      padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+                      padding: const EdgeInsets.all(
+                        Dimensions.paddingSizeDefault,
+                      ),
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                        borderRadius: BorderRadius.circular(
+                          Dimensions.radiusDefault,
+                        ),
                         border: Border.all(
-                          color: Theme.of(context).disabledColor.withValues(alpha: 0.2),
+                          color: Theme.of(
+                            context,
+                          ).disabledColor.withValues(alpha: 0.2),
                         ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            _customDateRange != null 
-                              ? _formatDateRange(_customDateRange!)
-                              : 'select_date_range'.tr,
+                            _customDateRange != null
+                                ? _formatDateRange(_customDateRange!)
+                                : 'select_date_range'.tr,
                             style: robotoRegular.copyWith(
                               fontSize: Dimensions.fontSizeDefault,
                               color: _customDateRange != null
-                                ? Theme.of(context).textTheme.bodyLarge!.color
-                                : Theme.of(context).disabledColor,
+                                  ? Theme.of(context).textTheme.bodyLarge!.color
+                                  : Theme.of(context).disabledColor,
                             ),
                           ),
                           Icon(
@@ -211,7 +238,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                     ),
                   ),
                 ],
-                
+
                 const SizedBox(height: Dimensions.paddingSizeLarge),
               ],
             ),
@@ -250,22 +277,28 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                       },
                     ),
                   ),
-                  
+
                   const SizedBox(width: Dimensions.paddingSizeDefault),
-                  
+
                   // Filter Button
                   Expanded(
                     child: CustomButtonWidget(
                       buttonText: 'filter'.tr,
                       onPressed: () {
-                        if(_selectedDateRange == 'custom_date_range') {
+                        if (_selectedDateRange == 'custom_date_range') {
                           _selectedDateRange = 'custom';
                         }
-                        widget.onApply?.call(_selectedDateRange, _customDateRange?.start.toString(), _customDateRange?.end.toString());
-                        Get.back(result: {
-                          'dateRange': _selectedDateRange,
-                          'customRange': _customDateRange,
-                        });
+                        widget.onApply?.call(
+                          _selectedDateRange,
+                          _customDateRange?.start.toString(),
+                          _customDateRange?.end.toString(),
+                        );
+                        Get.back(
+                          result: {
+                            'dateRange': _selectedDateRange,
+                            'customRange': _customDateRange,
+                          },
+                        );
                       },
                     ),
                   ),

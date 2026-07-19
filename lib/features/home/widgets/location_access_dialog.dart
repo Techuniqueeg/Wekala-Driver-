@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart_delivery/util/dimensions.dart';
-import 'package:sixam_mart_delivery/util/styles.dart';
+import 'package:wekala_delivery/util/dimensions.dart';
+import 'package:wekala_delivery/util/styles.dart';
 
 class LocationAccessDialog extends StatelessWidget {
   final Function()? onConfirm;
@@ -45,36 +45,52 @@ class LocationAccessDialog extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'location_access_needed'.tr,
-                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                  style: robotoBold.copyWith(
+                    fontSize: Dimensions.fontSizeLarge,
+                  ),
                 ),
                 const SizedBox(height: Dimensions.paddingSizeSmall),
 
                 Text(
-                  'to_provide_accurate_delivery_tracking_and_updates_we_need_access_to_your_location'.tr,
-                  style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
+                  'to_provide_accurate_delivery_tracking_and_updates_we_need_access_to_your_location'
+                      .tr,
+                  style: robotoRegular.copyWith(
+                    fontSize: Dimensions.fontSizeSmall,
+                  ),
                 ),
                 const SizedBox(height: 20.0),
 
                 Text(
                   'why_we_need_it'.tr,
-                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                  style: robotoBold.copyWith(
+                    fontSize: Dimensions.fontSizeLarge,
+                  ),
                 ),
                 const SizedBox(height: Dimensions.paddingSizeSmall),
 
                 _buildBulletPoint('show_your_live_location_on_the_map'.tr),
                 _buildBulletPoint('provide_accurate_delivery_ETA'.tr),
-                _buildBulletPoint('ensure_seamless_tracking_even_in_background_locked_mode'.tr),
-                _buildBulletPoint('improve_delivery_efficiency_and_accuracy'.tr),
+                _buildBulletPoint(
+                  'ensure_seamless_tracking_even_in_background_locked_mode'.tr,
+                ),
+                _buildBulletPoint(
+                  'improve_delivery_efficiency_and_accuracy'.tr,
+                ),
                 const SizedBox(height: 20.0),
 
                 Text(
                   'note'.tr,
-                  style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge),
+                  style: robotoBold.copyWith(
+                    fontSize: Dimensions.fontSizeLarge,
+                  ),
                 ),
                 const SizedBox(height: Dimensions.paddingSizeSmall),
                 Text(
-                  'your_location_is_only_used_for_delivery_and_never_shared_with_third_parties'.tr,
-                  style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall),
+                  'your_location_is_only_used_for_delivery_and_never_shared_with_third_parties'
+                      .tr,
+                  style: robotoRegular.copyWith(
+                    fontSize: Dimensions.fontSizeSmall,
+                  ),
                 ),
                 const SizedBox(height: 24.0),
 
@@ -83,18 +99,12 @@ class LocationAccessDialog extends StatelessWidget {
                   children: <Widget>[
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text(
-                        'cancel'.tr,
-                        style: robotoBold,
-                      ),
+                      child: Text('cancel'.tr, style: robotoBold),
                     ),
                     const SizedBox(width: 16.0),
                     TextButton(
                       onPressed: onConfirm,
-                      child: Text(
-                        'next'.tr,
-                        style: robotoBold,
-                      ),
+                      child: Text('next'.tr, style: robotoBold),
                     ),
                   ],
                 ),
@@ -103,7 +113,8 @@ class LocationAccessDialog extends StatelessWidget {
           ),
 
           Positioned(
-            top: 10, right: 10,
+            top: 10,
+            right: 10,
             child: InkWell(
               onTap: () => Navigator.of(context).pop(),
               child: Container(

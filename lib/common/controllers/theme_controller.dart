@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:sixam_mart_delivery/util/app_constants.dart';
+import 'package:wekala_delivery/util/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,6 +1,5 @@
-import 'package:sixam_mart_delivery/features/ride_module/add_vehicle/domain/models/ride_categoty_model.dart';
-import 'package:sixam_mart_delivery/features/ride_module/add_vehicle/domain/models/vehicle_brand_model.dart';
-
+import 'package:wekala_delivery/features/ride_module/add_vehicle/domain/models/ride_categoty_model.dart';
+import 'package:wekala_delivery/features/ride_module/add_vehicle/domain/models/vehicle_brand_model.dart';
 
 class ProfileModel {
   int? id;
@@ -165,7 +164,9 @@ class ProfileModel {
     refCode = json['ref_code'];
     referalEarning = json['referal_earning']?.toDouble();
     loyaltyPoint = json['loyalty_point'];
-    vehicle = json['rider_vehicle'] != null ? Vehicle.fromJson(json['rider_vehicle']) : null;
+    vehicle = json['rider_vehicle'] != null
+        ? Vehicle.fromJson(json['rider_vehicle'])
+        : null;
     wallet = json['wallet'] != null ? Wallet.fromJson(json['wallet']) : null;
     dynamicBalanceType = json['dynamic_balance_type'];
     dynamicBalance = json['dynamic_balance']?.toDouble();
@@ -183,7 +184,9 @@ class ProfileModel {
     timeTrack = json['time_track'] != null
         ? TimeTrack.fromJson(json['time_track'])
         : null;
-    userinfo = json['userinfo'] != null ? Userinfo.fromJson(json['userinfo']) : null;
+    userinfo = json['userinfo'] != null
+        ? Userinfo.fromJson(json['userinfo'])
+        : null;
     riderVehicle = json['rider_vehicle'] != null
         ? RiderVehicle.fromJson(json['rider_vehicle'])
         : null;
@@ -235,19 +238,13 @@ class ProfileModel {
   }
 }
 
-
 class RiderVehicle {
   int? id;
   String? name;
   Brand? brand;
   Category? category;
 
-  RiderVehicle(
-      {this.id,
-        this.name,
-        this.brand,
-        this.category,
-      });
+  RiderVehicle({this.id, this.name, this.brand, this.category});
 
   RiderVehicle.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -280,7 +277,14 @@ class Userinfo {
   String? email;
   String? image;
 
-  Userinfo({this.id, this.fName, this.lName, this.phone, this.email, this.image,});
+  Userinfo({
+    this.id,
+    this.fName,
+    this.lName,
+    this.phone,
+    this.email,
+    this.image,
+  });
 
   Userinfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -323,32 +327,32 @@ class Vehicle {
   double? parcelWeightCapacity;
   List<VehicleTranslation>? translationList;
 
-
-  Vehicle(
-      {
-        this.id,
-        this.name,
-        this.brand,
-        this.model,
-        this.category,
-        this.licencePlateNumber,
-        this.licenceExpireDate,
-        this.vinNumber,
-        this.transmission,
-        this.fuelType,
-        this.ownership,
-        this.documentsFullUrl,
-        this.isActive,
-        this.createdAt,
-        this.parcelWeightCapacity,
-        this.denyNote,
-        this.vehicleRequestStatus,
-        this.translationList
-      });
+  Vehicle({
+    this.id,
+    this.name,
+    this.brand,
+    this.model,
+    this.category,
+    this.licencePlateNumber,
+    this.licenceExpireDate,
+    this.vinNumber,
+    this.transmission,
+    this.fuelType,
+    this.ownership,
+    this.documentsFullUrl,
+    this.isActive,
+    this.createdAt,
+    this.parcelWeightCapacity,
+    this.denyNote,
+    this.vehicleRequestStatus,
+    this.translationList,
+  });
 
   Vehicle.fromJson(Map<String, dynamic> json) {
     brand = json['brand'] != null ? Brand.fromJson(json['brand']) : null;
-    model = json['model'] != null ? VehicleModels.fromJson(json['model']) : null;
+    model = json['model'] != null
+        ? VehicleModels.fromJson(json['model'])
+        : null;
     category = json['category'] != null
         ? Category.fromJson(json['category'])
         : null;
@@ -360,13 +364,19 @@ class Vehicle {
     transmission = json['transmission'];
     fuelType = json['fuel_type'];
     ownership = json['ownership'];
-    documentsFullUrl =  json['documents_full_url'] != null && json['documents_full_url'] != [] && json['documents_full_url'][0] != null ? json['documents_full_url'].cast<String>() : null;
-    isActive = json['is_active'] ? 1: 0;
+    documentsFullUrl =
+        json['documents_full_url'] != null &&
+            json['documents_full_url'] != [] &&
+            json['documents_full_url'][0] != null
+        ? json['documents_full_url'].cast<String>()
+        : null;
+    isActive = json['is_active'] ? 1 : 0;
     createdAt = json['created_at'];
     vehicleRequestStatus = json['vehicle_request_status'];
     denyNote = json['deny_note'];
-    parcelWeightCapacity = json['parcel_weight_capacity'] == null ? null :
-    double.tryParse('${json['parcel_weight_capacity']}');
+    parcelWeightCapacity = json['parcel_weight_capacity'] == null
+        ? null
+        : double.tryParse('${json['parcel_weight_capacity']}');
     if (json['translations'] != null) {
       translationList = <VehicleTranslation>[];
       json['translations'].forEach((v) {
@@ -412,14 +422,14 @@ class VehicleTranslation {
   String? key;
   String? value;
 
-  VehicleTranslation(
-      {this.id,
-        this.translationableType,
-        this.translationableId,
-        this.locale,
-        this.key,
-        this.value
-      });
+  VehicleTranslation({
+    this.id,
+    this.translationableType,
+    this.translationableId,
+    this.locale,
+    this.key,
+    this.value,
+  });
 
   VehicleTranslation.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -452,29 +462,28 @@ class Wallet {
   double? totalWithdrawn;
   double? referralEarn;
 
-  Wallet(
-      {this.id,
-        this.payableBalance,
-        this.receivableBalance,
-        this.receivedBalance,
-        this.pendingBalance,
-        this.walletBalance,
-        this.totalWithdrawn,
-        this.referralEarn
-      });
+  Wallet({
+    this.id,
+    this.payableBalance,
+    this.receivableBalance,
+    this.receivedBalance,
+    this.pendingBalance,
+    this.walletBalance,
+    this.totalWithdrawn,
+    this.referralEarn,
+  });
 
   Wallet.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     payableBalance = json['payable_balance'].toDouble();
     receivableBalance = json['receivable_balance'].toDouble();
-    if(json['received_balance'] != null){
-      try{
+    if (json['received_balance'] != null) {
+      try {
         receivedBalance = json['received_balance'].toDouble();
-      }catch(e){
+      } catch (e) {
         receivedBalance = double.parse(json['received_balance']);
       }
-
-    }else{
+    } else {
       receivedBalance = 0;
     }
     pendingBalance = json['pending_balance'].toDouble();
@@ -482,7 +491,6 @@ class Wallet {
     totalWithdrawn = json['total_withdrawn'].toDouble();
     referralEarn = json['referral_earn'].toDouble();
   }
-
 }
 
 class TimeTrack {
@@ -493,13 +501,14 @@ class TimeTrack {
   int? totalIdle;
   int? totalDriving;
 
-  TimeTrack(
-      {this.id,
-        this.date,
-        this.totalOnline,
-        this.totalOffline,
-        this.totalIdle,
-        this.totalDriving});
+  TimeTrack({
+    this.id,
+    this.date,
+    this.totalOnline,
+    this.totalOffline,
+    this.totalIdle,
+    this.totalDriving,
+  });
 
   TimeTrack.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -509,5 +518,4 @@ class TimeTrack {
     totalIdle = json['total_idle'];
     totalDriving = json['total_driving'];
   }
-
 }

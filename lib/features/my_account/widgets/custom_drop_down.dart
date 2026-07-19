@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:sixam_mart_delivery/common/widgets/custom_dropdown_widget.dart';
-import 'package:sixam_mart_delivery/util/dimensions.dart';
-import 'package:sixam_mart_delivery/util/styles.dart';
+import 'package:wekala_delivery/common/widgets/custom_dropdown_widget.dart';
+import 'package:wekala_delivery/util/dimensions.dart';
+import 'package:wekala_delivery/util/styles.dart';
 
 class CustomDropDown extends StatelessWidget {
   final Function(int, int)? onChange;
   final List<DropdownItem<int>> itemList;
   final String title;
-  const CustomDropDown({super.key, this.onChange, required this.itemList, required this.title});
+  const CustomDropDown({
+    super.key,
+    this.onChange,
+    required this.itemList,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +39,18 @@ class CustomDropDown extends StatelessWidget {
         ),
         items: itemList,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeExtraSmall, horizontal: Dimensions.paddingSizeExtraSmall),
-          child: Text(title, style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color!.withValues(alpha: 0.5))),
+          padding: const EdgeInsets.symmetric(
+            vertical: Dimensions.paddingSizeExtraSmall,
+            horizontal: Dimensions.paddingSizeExtraSmall,
+          ),
+          child: Text(
+            title,
+            style: robotoRegular.copyWith(
+              color: Theme.of(
+                context,
+              ).textTheme.bodyLarge!.color!.withValues(alpha: 0.5),
+            ),
+          ),
         ),
       ),
     );

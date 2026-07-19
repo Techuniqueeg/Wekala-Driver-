@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sixam_mart_delivery/api/api_client.dart';
-import 'package:sixam_mart_delivery/features/chat/domain/models/conversation_model.dart';
-import 'package:sixam_mart_delivery/features/chat/domain/models/message_model.dart';
-import 'package:sixam_mart_delivery/features/chat/domain/repositories/chat_repository_interface.dart';
-import 'package:sixam_mart_delivery/util/app_constants.dart';
+import 'package:wekala_delivery/api/api_client.dart';
+import 'package:wekala_delivery/features/chat/domain/models/conversation_model.dart';
+import 'package:wekala_delivery/features/chat/domain/models/message_model.dart';
+import 'package:wekala_delivery/features/chat/domain/repositories/chat_repository_interface.dart';
+import 'package:wekala_delivery/util/app_constants.dart';
 
 class ChatRepository implements ChatRepositoryInterface {
   final ApiClient apiClient;
@@ -12,50 +12,83 @@ class ChatRepository implements ChatRepositoryInterface {
   ChatRepository({required this.apiClient, required this.sharedPreferences});
 
   @override
-  Future<ConversationsModel?> getConversationList(int offset, String type) async {
+  Future<ConversationsModel?> getConversationList(
+    int offset,
+    String type,
+  ) async {
     ConversationsModel? conversationModel;
-    Response response = await apiClient.getData('${AppConstants.getConversationListUri}?token=${_getUserToken()}&offset=$offset&limit=10&type=$type');
-    if(response.statusCode == 200) {
+    Response response = await apiClient.getData(
+      '${AppConstants.getConversationListUri}?token=${_getUserToken()}&offset=$offset&limit=10&type=$type',
+    );
+    if (response.statusCode == 200) {
       conversationModel = ConversationsModel.fromJson(response.body);
     }
     return conversationModel;
   }
 
   @override
-  Future<ConversationsModel?> searchConversationList(String name, String type) async {
+  Future<ConversationsModel?> searchConversationList(
+    String name,
+    String type,
+  ) async {
     ConversationsModel? searchConversationModel;
-    Response response = await apiClient.getData('${AppConstants.searchConversationListUri}?name=$name&token=${_getUserToken()}&limit=20&offset=1&type=$type');
-    if(response.statusCode == 200) {
+    Response response = await apiClient.getData(
+      '${AppConstants.searchConversationListUri}?name=$name&token=${_getUserToken()}&limit=20&offset=1&type=$type',
+    );
+    if (response.statusCode == 200) {
       searchConversationModel = ConversationsModel.fromJson(response.body);
     }
     return searchConversationModel;
   }
 
   @override
-  Future<MessageModel?> getMessages(int offset, int? userId, String userType, int? conversationID) async {
+  Future<MessageModel?> getMessages(
+    int offset,
+    int? userId,
+    String userType,
+    int? conversationID,
+  ) async {
     MessageModel? messageModel;
-    Response response = await apiClient.getData('${AppConstants.getMessageListUri}?${conversationID != null ?
-    'conversation_id' : userType == AppConstants.user ? 'user_id' : userType == AppConstants.admin ? 'admin_id=0' : 'vendor_id'}=${conversationID ?? userId}&token=${_getUserToken()}&offset=$offset&limit=10');
-    if(response.statusCode == 200 && response.body['messages'] != {}) {
+    Response response = await apiClient.getData(
+      '${AppConstants.getMessageListUri}?${conversationID != null
+          ? 'conversation_id'
+          : userType == AppConstants.user
+          ? 'user_id'
+          : userType == AppConstants.admin
+          ? 'admin_id=0'
+          : 'vendor_id'}=${conversationID ?? userId}&token=${_getUserToken()}&offset=$offset&limit=10',
+    );
+    if (response.statusCode == 200 && response.body['messages'] != {}) {
       messageModel = MessageModel.fromJson(response.body);
     }
     return messageModel;
   }
 
   @override
-  Future<MessageModel?> sendMessage(String message, List<MultipartBody> file, int? conversationId, int? userId, String userType) async {
+  Future<MessageModel?> sendMessage(
+    String message,
+    List<MultipartBody> file,
+    int? conversationId,
+    int? userId,
+    String userType,
+  ) async {
     MessageModel? messageModel;
     Map<String, String> fields = {};
     fields.addAll({
       'message': message,
       'receiver_type': userType,
-      conversationId != null ? 'conversation_id' : 'receiver_id': '${conversationId ?? userId}',
+      conversationId != null ? 'conversation_id' : 'receiver_id':
+          '${conversationId ?? userId}',
       'token': _getUserToken(),
       'offset': '1',
-      'limit': '10'
+      'limit': '10',
     });
-    Response response = await apiClient.postMultipartData(AppConstants.sendMessageUri, fields, file);
-    if(response.statusCode == 200) {
+    Response response = await apiClient.postMultipartData(
+      AppConstants.sendMessageUri,
+      fields,
+      file,
+    );
+    if (response.statusCode == 200) {
       messageModel = MessageModel.fromJson(response.body);
     }
     return messageModel;
@@ -66,13 +99,16 @@ class ChatRepository implements ChatRepositoryInterface {
   }
 
   @override
-  Future<MessageModel?> sendFaqMessage({String? questionId, String? channelId}) async {
+  Future<MessageModel?> sendFaqMessage({
+    String? questionId,
+    String? channelId,
+  }) async {
     MessageModel? messageModel;
-    Response response =  await apiClient.postData(AppConstants.sendFaqMessageToAdmin, {
-      "question_id" : questionId ?? '',
-      "token": _getUserToken(),
-    });
-    if(response.statusCode == 200) {
+    Response response = await apiClient.postData(
+      AppConstants.sendFaqMessageToAdmin,
+      {"question_id": questionId ?? '', "token": _getUserToken()},
+    );
+    if (response.statusCode == 200) {
       messageModel = MessageModel.fromJson(response.body);
     }
     return messageModel;
@@ -102,5 +138,4 @@ class ChatRepository implements ChatRepositoryInterface {
   Future update(Map<String, dynamic> body) {
     throw UnimplementedError();
   }
-
 }

@@ -1,6 +1,6 @@
-import 'package:sixam_mart_delivery/features/notification/domain/models/notification_model.dart';
-import 'package:sixam_mart_delivery/features/notification/domain/repositories/notification_repository_interface.dart';
-import 'package:sixam_mart_delivery/features/notification/domain/services/notification_service_interface.dart';
+import 'package:wekala_delivery/features/notification/domain/models/notification_model.dart';
+import 'package:wekala_delivery/features/notification/domain/repositories/notification_repository_interface.dart';
+import 'package:wekala_delivery/features/notification/domain/services/notification_service_interface.dart';
 
 class NotificationService implements NotificationServiceInterface {
   final NotificationRepositoryInterface notificationRepositoryInterface;
@@ -13,7 +13,9 @@ class NotificationService implements NotificationServiceInterface {
 
   @override
   Future<bool> sendDeliveredNotification(int? orderID) async {
-    return await notificationRepositoryInterface.sendDeliveredNotification(orderID);
+    return await notificationRepositoryInterface.sendDeliveredNotification(
+      orderID,
+    );
   }
 
   @override
@@ -35,5 +37,4 @@ class NotificationService implements NotificationServiceInterface {
   void addSeenNotificationIdList(List<int> notificationList) {
     notificationRepositoryInterface.addSeenNotificationIdList(notificationList);
   }
-
 }

@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
-import 'package:sixam_mart_delivery/features/ride_module/safety/domain/services/safety_alert_service_interface.dart';
+import 'package:wekala_delivery/features/ride_module/safety/domain/services/safety_alert_service_interface.dart';
 
-
- enum SafetyAlertState{initialState,predefineAlert,afterSendAlert,otherNumberState}
+enum SafetyAlertState {
+  initialState,
+  predefineAlert,
+  afterSendAlert,
+  otherNumberState,
+}
 
 class SafetyAlertController extends GetxController implements GetxService {
   final SafetyAlertServiceInterface safetyAlertServiceInterface;
@@ -10,9 +14,8 @@ class SafetyAlertController extends GetxController implements GetxService {
 
   SafetyAlertState currentState = SafetyAlertState.initialState;
 
-  void updateSafetyAlertState(SafetyAlertState state,{bool isUpdate = true}){}
-  void getSafetyAlertDetails(String tripId) async{}
-  void checkDriverNeedSafety() async{}
-  void cancelDriverNeedSafetyStream(){}
-
+  void updateSafetyAlertState(SafetyAlertState state, {bool isUpdate = true}) {}
+  void getSafetyAlertDetails(String tripId) async {}
+  void checkDriverNeedSafety() async {}
+  void cancelDriverNeedSafetyStream() {}
 }

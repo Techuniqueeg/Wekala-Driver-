@@ -1,4 +1,4 @@
-package com.sixamtech.sixam_mart_delivery_app
+package com.wekala.delivery
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,42 +1,42 @@
 import 'dart:async';
-import 'package:sixam_mart_delivery/api/api_client.dart';
-import 'package:sixam_mart_delivery/features/auth/domain/models/delivery_man_body_model.dart';
-import 'package:sixam_mart_delivery/common/models/response_model.dart';
-import 'package:sixam_mart_delivery/features/auth/domain/models/vehicle_model.dart';
-import 'package:sixam_mart_delivery/features/splash/controllers/splash_controller.dart';
-import 'package:sixam_mart_delivery/helper/pusher_helper.dart';
-import 'package:sixam_mart_delivery/helper/route_helper.dart';
+import 'package:wekala_delivery/api/api_client.dart';
+import 'package:wekala_delivery/features/auth/domain/models/delivery_man_body_model.dart';
+import 'package:wekala_delivery/common/models/response_model.dart';
+import 'package:wekala_delivery/features/auth/domain/models/vehicle_model.dart';
+import 'package:wekala_delivery/features/splash/controllers/splash_controller.dart';
+import 'package:wekala_delivery/helper/pusher_helper.dart';
+import 'package:wekala_delivery/helper/route_helper.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sixam_mart_delivery/features/auth/domain/services/auth_service_interface.dart';
+import 'package:wekala_delivery/features/auth/domain/services/auth_service_interface.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthServiceInterface authServiceInterface;
-  AuthController({required this.authServiceInterface}){
+  AuthController({required this.authServiceInterface}) {
     _notification = authServiceInterface.isNotificationActive();
   }
 
   bool _isActiveRememberMe = false;
   bool get isActiveRememberMe => _isActiveRememberMe;
-  
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  
+
   bool _notification = true;
   bool get notification => _notification;
-  
+
   XFile? _pickedImage;
   XFile? get pickedImage => _pickedImage;
-  
+
   List<XFile> _pickedIdentities = [];
   List<XFile> get pickedIdentities => _pickedIdentities;
-  
+
   final List<String> _identityTypeList = ['passport', 'driving_license', 'nid'];
   List<String> get identityTypeList => _identityTypeList;
 
   String? _selectedIdentityType;
   String? get selectedIdentityType => _selectedIdentityType;
-  
+
   final List<String> _dmTypeList = ['freelancer', 'salary_based'];
   List<String> get dmTypeList => _dmTypeList;
 
@@ -45,55 +45,62 @@ class AuthController extends GetxController implements GetxService {
 
   String? _selectedDmTypeId;
   String? get selectedDmTypeId => _selectedDmTypeId;
-  
+
   List<VehicleModel>? _vehicles;
   List<VehicleModel>? get vehicles => _vehicles;
-  
+
   List<int?>? _vehicleIds;
   List<int?>? get vehicleIds => _vehicleIds;
 
   String? _selectedVehicleId;
   String? get selectedVehicleId => _selectedVehicleId;
-  
+
   double _dmStatus = 0.4;
   double get dmStatus => _dmStatus;
-  
+
   bool _lengthCheck = false;
   bool get lengthCheck => _lengthCheck;
-  
+
   bool _numberCheck = false;
   bool get numberCheck => _numberCheck;
-  
+
   bool _uppercaseCheck = false;
   bool get uppercaseCheck => _uppercaseCheck;
-  
+
   bool _lowercaseCheck = false;
   bool get lowercaseCheck => _lowercaseCheck;
-  
+
   bool _spatialCheck = false;
   bool get spatialCheck => _spatialCheck;
-  
+
   bool _showPassView = false;
   bool get showPassView => _showPassView;
-  
+
   bool _acceptTerms = true;
   bool get acceptTerms => _acceptTerms;
 
   bool _notificationLoading = false;
   bool get notificationLoading => _notificationLoading;
 
-  Future<ResponseModel> login(String phone, String password, String type) async {
+  Future<ResponseModel> login(
+    String phone,
+    String password,
+    String type,
+  ) async {
     _isLoading = true;
     update();
     Response response = await authServiceInterface.login(phone, password, type);
     ResponseModel responseModel;
     if (response.statusCode == 200) {
-
-      if(Get.find<SplashController>().configModel?.webSocketStatus ?? false){
+      if (Get.find<SplashController>().configModel?.webSocketStatus ?? false) {
         PusherHelper.initializePusher();
       }
 
-      authServiceInterface.saveUserToken(response.body['token'], response.body['zone_topic'], response.body['topic']);
+      authServiceInterface.saveUserToken(
+        response.body['token'],
+        response.body['zone_topic'],
+        response.body['topic'],
+      );
       await authServiceInterface.updateToken();
       responseModel = ResponseModel(true, 'successful');
     } else {
@@ -107,8 +114,14 @@ class AuthController extends GetxController implements GetxService {
   Future<void> registerDeliveryMan(DeliveryManBodyModel deliveryManBody) async {
     _isLoading = true;
     update();
-    List<MultipartBody> multiParts = authServiceInterface.prepareMultiPartsBody(_pickedImage, _pickedIdentities);
-    bool isSuccess = await authServiceInterface.registerDeliveryMan(deliveryManBody, multiParts);
+    List<MultipartBody> multiParts = authServiceInterface.prepareMultiPartsBody(
+      _pickedImage,
+      _pickedIdentities,
+    );
+    bool isSuccess = await authServiceInterface.registerDeliveryMan(
+      deliveryManBody,
+      multiParts,
+    );
     if (isSuccess) {
       Get.offAllNamed(RouteHelper.getDmRegistrationSuccessRoute());
     }
@@ -147,9 +160,9 @@ class AuthController extends GetxController implements GetxService {
     await authServiceInterface.updateToken();
   }
 
-  void dmStatusChange(double value, {bool isUpdate = true}){
+  void dmStatusChange(double value, {bool isUpdate = true}) {
     _dmStatus = value;
-    if(isUpdate) {
+    if (isUpdate) {
       update();
     }
   }
@@ -172,8 +185,18 @@ class AuthController extends GetxController implements GetxService {
     return await authServiceInterface.clearSharedData();
   }
 
-  void saveUserNumberAndPassword(String number, String password, String countryDialCode, String countryCode) {
-    authServiceInterface.saveUserNumberAndPassword(number, password, countryDialCode, countryCode);
+  void saveUserNumberAndPassword(
+    String number,
+    String password,
+    String countryDialCode,
+    String countryCode,
+  ) {
+    authServiceInterface.saveUserNumberAndPassword(
+      number,
+      password,
+      countryDialCode,
+      countryCode,
+    );
   }
 
   String getUserNumber() {
@@ -211,15 +234,16 @@ class AuthController extends GetxController implements GetxService {
   }
 
   void pickDmImageForRegistration(bool isLogo, bool isRemove) async {
-    if(isRemove) {
+    if (isRemove) {
       _pickedImage = null;
       _pickedIdentities = [];
-    }else {
+    } else {
       if (isLogo) {
         _pickedImage = await authServiceInterface.pickImageFromGallery();
       } else {
-        XFile? pickedIdentities = await authServiceInterface.pickImageFromGallery();
-        if(pickedIdentities != null) {
+        XFile? pickedIdentities = await authServiceInterface
+            .pickImageFromGallery();
+        if (pickedIdentities != null) {
           _pickedIdentities.add(pickedIdentities);
         }
       }
@@ -232,41 +256,41 @@ class AuthController extends GetxController implements GetxService {
     update();
   }
 
-  void showHidePass({bool isUpdate = true}){
-    _showPassView = ! _showPassView;
-    if(isUpdate) {
+  void showHidePass({bool isUpdate = true}) {
+    _showPassView = !_showPassView;
+    if (isUpdate) {
       update();
     }
   }
 
-  void validPassCheck(String pass, {bool isUpdate = true}){
+  void validPassCheck(String pass, {bool isUpdate = true}) {
     _lengthCheck = false;
     _numberCheck = false;
     _uppercaseCheck = false;
     _lowercaseCheck = false;
     _spatialCheck = false;
 
-    if(pass.length > 7){
+    if (pass.length > 7) {
       _lengthCheck = true;
     }
-    if(pass.contains(RegExp(r'[a-z]'))){
+    if (pass.contains(RegExp(r'[a-z]'))) {
       _lowercaseCheck = true;
     }
-    if(pass.contains(RegExp(r'[A-Z]'))){
+    if (pass.contains(RegExp(r'[A-Z]'))) {
       _uppercaseCheck = true;
     }
-    if(pass.contains(RegExp(r'[ .!@#$&*~^%]'))){
+    if (pass.contains(RegExp(r'[ .!@#$&*~^%]'))) {
       _spatialCheck = true;
     }
-    if(pass.contains(RegExp(r'[\d+]'))){
+    if (pass.contains(RegExp(r'[\d+]'))) {
       _numberCheck = true;
     }
-    if(isUpdate) {
+    if (isUpdate) {
       update();
     }
   }
 
-  void resetDmRegistrationData(){
+  void resetDmRegistrationData() {
     _pickedImage = null;
     _pickedIdentities = [];
     _selectedIdentityType = null;
@@ -282,8 +306,7 @@ class AuthController extends GetxController implements GetxService {
     _spatialCheck = false;
   }
 
-  void saveRideCreatedTime(){
+  void saveRideCreatedTime() {
     authServiceInterface.saveRideCreatedTime(DateTime.now());
   }
-  
 }

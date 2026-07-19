@@ -1,6 +1,6 @@
-import 'package:sixam_mart_delivery/features/language/domain/models/language_model.dart';
-import 'package:sixam_mart_delivery/util/enums.dart';
-import 'package:sixam_mart_delivery/util/images.dart';
+import 'package:wekala_delivery/features/language/domain/models/language_model.dart';
+import 'package:wekala_delivery/util/enums.dart';
+import 'package:wekala_delivery/util/images.dart';
 
 class AppConstants {
   static const String appName = 'Wekala Driver App';
@@ -196,22 +196,21 @@ class AppConstants {
       '/api/v1/rideshare/rider/broadcasting/deliveryman-auth';
 
   /// Shared Key
-  static const String theme = 'sixam_mart_delivery_theme';
-  static const String token = 'sixam_mart_delivery_token';
-  static const String countryCode = 'sixam_mart_delivery_country_code';
-  static const String languageCode = 'sixam_mart_delivery_language_code';
+  static const String theme = 'wekala_delivery_theme';
+  static const String token = 'wekala_delivery_token';
+  static const String countryCode = 'wekala_delivery_country_code';
+  static const String languageCode = 'wekala_delivery_language_code';
   static const String cacheCountryCode = 'cache_country_code';
   static const String cacheLanguageCode = 'cache_language_code';
-  static const String userPassword = 'sixam_mart_delivery_user_password';
-  static const String userAddress = 'sixam_mart_delivery_user_address';
-  static const String userNumber = 'sixam_mart_delivery_user_number';
+  static const String userPassword = 'wekala_delivery_user_password';
+  static const String userAddress = 'wekala_delivery_user_address';
+  static const String userNumber = 'wekala_delivery_user_number';
   static const String userCountryDialCode =
-      'sixam_mart_delivery_user_country_dial_code';
-  static const String userCountryCode = 'sixam_mart_delivery_user_country_code';
-  static const String notification = 'sixam_mart_delivery_notification';
-  static const String notificationCount =
-      'sixam_mart_delivery_notification_count';
-  static const String ignoreList = 'sixam_mart_delivery_ignore_list';
+      'wekala_delivery_user_country_dial_code';
+  static const String userCountryCode = 'wekala_delivery_user_country_code';
+  static const String notification = 'wekala_delivery_notification';
+  static const String notificationCount = 'wekala_delivery_notification_count';
+  static const String ignoreList = 'wekala_delivery_ignore_list';
   static const String localizationKey = 'X-localization';
   static const String langIntro = 'language_intro';
   static const String notificationIdList = 'notification_id_list';

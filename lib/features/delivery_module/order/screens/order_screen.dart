@@ -1,10 +1,10 @@
-import 'package:sixam_mart_delivery/features/delivery_module/order/controllers/order_controller.dart';
-import 'package:sixam_mart_delivery/features/delivery_module/order/screens/my_order_screen.dart';
-import 'package:sixam_mart_delivery/util/dimensions.dart';
-import 'package:sixam_mart_delivery/common/widgets/custom_app_bar_widget.dart';
+import 'package:wekala_delivery/features/delivery_module/order/controllers/order_controller.dart';
+import 'package:wekala_delivery/features/delivery_module/order/screens/my_order_screen.dart';
+import 'package:wekala_delivery/util/dimensions.dart';
+import 'package:wekala_delivery/common/widgets/custom_app_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart_delivery/util/styles.dart';
+import 'package:wekala_delivery/util/styles.dart';
 import 'running_order_screen.dart';
 
 class OrderScreen extends StatefulWidget {
@@ -15,16 +15,22 @@ class OrderScreen extends StatefulWidget {
   State<OrderScreen> createState() => _OrderScreenState();
 }
 
-class _OrderScreenState extends State<OrderScreen> with SingleTickerProviderStateMixin {
-
-
+class _OrderScreenState extends State<OrderScreen>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(length: 2, child: Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      appBar: CustomAppBarWidget(title: 'my_orders'.tr, isBackButtonExist: false, bottom: _orderTabBar(context),),
-      body: TabBarView(children: [RunningOrderScreen(), MyOrderScreen()])
-    ));
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
+        appBar: CustomAppBarWidget(
+          title: 'my_orders'.tr,
+          isBackButtonExist: false,
+          bottom: _orderTabBar(context),
+        ),
+        body: TabBarView(children: [RunningOrderScreen(), MyOrderScreen()]),
+      ),
+    );
   }
 }
 
@@ -71,4 +77,3 @@ TabBar _orderTabBar(BuildContext context) {
     ],
   );
 }
-

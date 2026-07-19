@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart_delivery/features/ride_module/trip/controllers/trip_controller.dart';
-import 'package:sixam_mart_delivery/helper/price_converter_helper.dart';
-import 'package:sixam_mart_delivery/util/styles.dart';
+import 'package:wekala_delivery/features/ride_module/trip/controllers/trip_controller.dart';
+import 'package:wekala_delivery/helper/price_converter_helper.dart';
+import 'package:wekala_delivery/util/styles.dart';
 
 class ChartWidget extends StatefulWidget {
   const ChartWidget({super.key});
@@ -20,28 +20,49 @@ class _ChartWidgetState extends State<ChartWidget> {
 
   bool showAvg = false;
 
-
   @override
   Widget build(BuildContext context) {
-    return Stack(children:[
-      Positioned(left: 0,right: 0, child: AspectRatio(
-        aspectRatio: 1.95,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(18))),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 18, left: 12, top: 24, bottom: 12,),
-            child: GetBuilder<TripController>(builder: (tripController) => LineChart(mainData(
-              tripController.earningChartList, tripController.maxValue,
-            ))),
+    return Stack(
+      children: [
+        Positioned(
+          left: 0,
+          right: 0,
+          child: AspectRatio(
+            aspectRatio: 1.95,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 18,
+                  left: 12,
+                  top: 24,
+                  bottom: 12,
+                ),
+                child: GetBuilder<TripController>(
+                  builder: (tripController) => LineChart(
+                    mainData(
+                      tripController.earningChartList,
+                      tripController.maxValue,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
-      )),
-    ]);
+      ],
+    );
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     final bool isToday = Get.find<TripController>().selectedOverview == 'today';
-    const style = TextStyle(color: Color(0xff68737d), fontWeight: FontWeight.normal, fontSize: 10);
+    const style = TextStyle(
+      color: Color(0xff68737d),
+      fontWeight: FontWeight.normal,
+      fontSize: 10,
+    );
 
     Widget text;
 
@@ -50,10 +71,10 @@ class _ChartWidgetState extends State<ChartWidget> {
         text = const Text('', style: style);
         break;
       case 1:
-        text =  Text(isToday ? '6am' : 'Sun', style: style);
+        text = Text(isToday ? '6am' : 'Sun', style: style);
         break;
       case 2:
-        text = Text(isToday ? '10am' :'Mon', style: style);
+        text = Text(isToday ? '10am' : 'Mon', style: style);
         break;
       case 3:
         text = Text(isToday ? '2pm' : 'Tue', style: style);
@@ -80,27 +101,32 @@ class _ChartWidgetState extends State<ChartWidget> {
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-
     String value = meta.formattedValue;
 
-    if(value.toLowerCase().contains('k')) {
-      value = '${PriceConverterHelper.convertPrice(double.parse(value.toLowerCase().replaceAll('k', '')))}K';
-
-    }else if(value.toLowerCase().contains('m')) {
-      value = '${PriceConverterHelper.convertPrice(double.parse(value.toLowerCase().replaceAll('m', '')))}M';
-
-    }else{
-      value = PriceConverterHelper.convertPrice(double.parse(value.toLowerCase()));
-
+    if (value.toLowerCase().contains('k')) {
+      value =
+          '${PriceConverterHelper.convertPrice(double.parse(value.toLowerCase().replaceAll('k', '')))}K';
+    } else if (value.toLowerCase().contains('m')) {
+      value =
+          '${PriceConverterHelper.convertPrice(double.parse(value.toLowerCase().replaceAll('m', '')))}M';
+    } else {
+      value = PriceConverterHelper.convertPrice(
+        double.parse(value.toLowerCase()),
+      );
     }
 
-
-    return SideTitleWidget(axisSide: meta.axisSide, child: Text(value, style: robotoRegular.copyWith(fontSize: 10,fontWeight: FontWeight.normal,color: Color(0xff68737d))));
-
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: Text(
+        value,
+        style: robotoRegular.copyWith(
+          fontSize: 10,
+          fontWeight: FontWeight.normal,
+          color: Color(0xff68737d),
+        ),
+      ),
+    );
   }
-
-
-
 
   LineChartData mainData(List<FlSpot>? spots, double maxValue) {
     return LineChartData(
@@ -119,12 +145,16 @@ class _ChartWidgetState extends State<ChartWidget> {
   LineTouchData get lineTouchData => LineTouchData(
     handleBuiltInTouches: true,
     touchTooltipData: LineTouchTooltipData(
-        getTooltipColor: (touchedSpot) => Theme.of(Get.context!).primaryColor.withValues(alpha: 0.05),
-        getTooltipItems: (List<LineBarSpot> touchedSpots){
-          return touchedSpots.map((spot){
-            return LineTooltipItem(PriceConverterHelper.convertPrice(spot.y), robotoRegular);
-          }).toList();
-        }
+      getTooltipColor: (touchedSpot) =>
+          Theme.of(Get.context!).primaryColor.withValues(alpha: 0.05),
+      getTooltipItems: (List<LineBarSpot> touchedSpots) {
+        return touchedSpots.map((spot) {
+          return LineTooltipItem(
+            PriceConverterHelper.convertPrice(spot.y),
+            robotoRegular,
+          );
+        }).toList();
+      },
     ),
   );
 
@@ -142,31 +172,46 @@ class _ChartWidgetState extends State<ChartWidget> {
   );
 
   FlTitlesData titlesData(double maxValue) => FlTitlesData(
-      show: true,
-      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false),),
-      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-      bottomTitles: AxisTitles(sideTitles: SideTitles(
-        showTitles: true, reservedSize: 30, interval: 1, getTitlesWidget: bottomTitleWidgets,
-      )),
-      leftTitles: AxisTitles(sideTitles: SideTitles(
-        showTitles: true, getTitlesWidget: leftTitleWidgets,
-        reservedSize: 65, interval: maxValue / 5 <= 0 ? 1 : maxValue / 5,
-      ))
+    show: true,
+    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+    bottomTitles: AxisTitles(
+      sideTitles: SideTitles(
+        showTitles: true,
+        reservedSize: 30,
+        interval: 1,
+        getTitlesWidget: bottomTitleWidgets,
+      ),
+    ),
+    leftTitles: AxisTitles(
+      sideTitles: SideTitles(
+        showTitles: true,
+        getTitlesWidget: leftTitleWidgets,
+        reservedSize: 65,
+        interval: maxValue / 5 <= 0 ? 1 : maxValue / 5,
+      ),
+    ),
   );
 
   FlBorderData get borderData => FlBorderData(show: false);
 
   List<LineChartBarData> lineBarsData(List<FlSpot>? spots) => [
     LineChartBarData(
-      spots: spots??[],
+      spots: spots ?? [],
       isCurved: true,
       barWidth: 1,
       isStrokeCapRound: true,
       color: Theme.of(context).primaryColor.withValues(alpha: 0.50),
-      dotData: const FlDotData(show: true,),
-      belowBarData: BarAreaData(show: true,
-        gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter,
-            colors: gradientColors.map((color) => color.withValues(alpha: 0.20)).toList()),
+      dotData: const FlDotData(show: true),
+      belowBarData: BarAreaData(
+        show: true,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: gradientColors
+              .map((color) => color.withValues(alpha: 0.20))
+              .toList(),
+        ),
       ),
     ),
   ];

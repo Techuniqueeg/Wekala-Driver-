@@ -1,5 +1,4 @@
-import 'package:sixam_mart_delivery/features/delivery_module/order/domain/models/order_model.dart';
-
+import 'package:wekala_delivery/features/delivery_module/order/domain/models/order_model.dart';
 
 class OrderDetailsModel {
   int? id;
@@ -49,15 +48,17 @@ class OrderDetailsModel {
     itemId = json['item_id'];
     orderId = json['order_id'];
     price = json['price']?.toDouble();
-    itemDetails = json['item_details'] != null ? ItemDetails.fromJson(json['item_details']) : null;
+    itemDetails = json['item_details'] != null
+        ? ItemDetails.fromJson(json['item_details'])
+        : null;
     variation = [];
     foodVariation = [];
     if (json['variation'] != null && json['variation'].isNotEmpty) {
-      if(json['variation'][0]['values'] != null) {
+      if (json['variation'][0]['values'] != null) {
         json['variation'].forEach((v) {
           foodVariation!.add(FoodVariation.fromJson(v));
         });
-      }else {
+      } else {
         json['variation'].forEach((v) {
           variation!.add(Variations.fromJson(v));
         });
@@ -79,7 +80,9 @@ class OrderDetailsModel {
     itemCampaignId = json['item_campaign_id'];
     totalAddOnPrice = json['total_add_on_price']?.toDouble();
     vendorId = json['vendor_id'];
-    parcelCancellation = json['parcel_cancellation'] != null ? ParcelCancellation.fromJson(json['parcel_cancellation']) : null;
+    parcelCancellation = json['parcel_cancellation'] != null
+        ? ParcelCancellation.fromJson(json['parcel_cancellation'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -93,7 +96,7 @@ class OrderDetailsModel {
     }
     if (variation != null) {
       data['variation'] = variation!.map((v) => v.toJson()).toList();
-    }else if(foodVariation != null) {
+    } else if (foodVariation != null) {
       data['variation'] = foodVariation!.map((v) => v.toJson()).toList();
     }
     if (addOns != null) {
@@ -206,12 +209,12 @@ class ItemDetails {
         categoryIds!.add(CategoryIds.fromJson(v));
       });
     }
-    if(json['food_variations'] != null && json['food_variations'] is !String) {
+    if (json['food_variations'] != null && json['food_variations'] is! String) {
       foodVariations = [];
       json['food_variations'].forEach((v) {
         foodVariations!.add(FoodVariation.fromJson(v));
       });
-    }else if(json['variations'] != null) {
+    } else if (json['variations'] != null) {
       variations = [];
       json['variations'].forEach((v) {
         variations!.add(Variations.fromJson(v));
@@ -257,17 +260,16 @@ class ItemDetails {
     if (categoryIds != null) {
       data['category_ids'] = categoryIds!.map((v) => v.toJson()).toList();
     }
-    if(foodVariations != null) {
+    if (foodVariations != null) {
       data['food_variations'] = foodVariations!.map((v) => v.toJson()).toList();
-    }else if(variations != null) {
+    } else if (variations != null) {
       data['variations'] = variations!.map((v) => v.toJson()).toList();
     }
     if (addOns != null) {
       data['add_ons'] = addOns!.map((v) => v.toJson()).toList();
     }
     if (choiceOptions != null) {
-      data['choice_options'] =
-          choiceOptions!.map((v) => v.toJson()).toList();
+      data['choice_options'] = choiceOptions!.map((v) => v.toJson()).toList();
     }
     data['price'] = price;
     data['tax'] = tax;
@@ -377,7 +379,14 @@ class FoodVariation {
   String? required;
   List<VariationValue>? variationValues;
 
-  FoodVariation({this.name, this.type, this.min, this.max, this.required, this.variationValues});
+  FoodVariation({
+    this.name,
+    this.type,
+    this.min,
+    this.max,
+    this.required,
+    this.variationValues,
+  });
 
   FoodVariation.fromJson(Map<String, dynamic> json) {
     name = json['name'];

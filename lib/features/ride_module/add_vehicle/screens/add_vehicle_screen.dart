@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sixam_mart_delivery/features/profile/domain/models/profile_model.dart';
-
+import 'package:wekala_delivery/features/profile/domain/models/profile_model.dart';
 
 class AddVehicleScreen extends StatefulWidget {
   final Vehicle? vehicleInfo;
@@ -10,12 +9,10 @@ class AddVehicleScreen extends StatefulWidget {
   State<AddVehicleScreen> createState() => _AddVehicleScreenState();
 }
 
-class _AddVehicleScreenState extends State<AddVehicleScreen> with SingleTickerProviderStateMixin {
-
+class _AddVehicleScreenState extends State<AddVehicleScreen>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(),
-    );
+    return Scaffold(body: SizedBox());
   }
 }

@@ -1,5 +1,4 @@
-
-import 'package:sixam_mart_delivery/features/ride_module/ride_order/domain/models/trip_details_model.dart';
+import 'package:wekala_delivery/features/ride_module/ride_order/domain/models/trip_details_model.dart';
 
 class PendingRideRequestModel {
   String? responseCode;
@@ -9,8 +8,14 @@ class PendingRideRequestModel {
   String? offset;
   List<RideDetails>? data;
 
-
-  PendingRideRequestModel({this.responseCode, this.message, this.totalSize, this.limit, this.offset, this.data});
+  PendingRideRequestModel({
+    this.responseCode,
+    this.message,
+    this.totalSize,
+    this.limit,
+    this.offset,
+    this.data,
+  });
 
   PendingRideRequestModel.fromJson(Map<String, dynamic> json) {
     responseCode = json['response_code'];
@@ -20,12 +25,9 @@ class PendingRideRequestModel {
     offset = json['offset'];
     if (json['data'] != null) {
       data = <RideDetails>[];
-      json['data'].forEach((v) { data!.add(RideDetails.fromJson(v)); });
+      json['data'].forEach((v) {
+        data!.add(RideDetails.fromJson(v));
+      });
     }
-
   }
-
-
 }
-
-

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sixam_mart_delivery/features/earning_reports/domain/emun/filter_type.dart';
-import 'package:sixam_mart_delivery/features/earning_reports/domain/models/earning_report_model.dart';
-import 'package:sixam_mart_delivery/features/earning_reports/domain/services/report_service_interface.dart';
-import 'package:sixam_mart_delivery/helper/date_converter_helper.dart';
-import 'package:sixam_mart_delivery/util/app_constants.dart';
-import 'package:sixam_mart_delivery/util/enums.dart';
+import 'package:wekala_delivery/features/earning_reports/domain/emun/filter_type.dart';
+import 'package:wekala_delivery/features/earning_reports/domain/models/earning_report_model.dart';
+import 'package:wekala_delivery/features/earning_reports/domain/services/report_service_interface.dart';
+import 'package:wekala_delivery/helper/date_converter_helper.dart';
+import 'package:wekala_delivery/util/app_constants.dart';
+import 'package:wekala_delivery/util/enums.dart';
 
 class EarningReportController extends GetxController implements GetxService {
   final EarningReportServiceInterface earningReportServiceInterface;
@@ -42,11 +42,17 @@ class EarningReportController extends GetxController implements GetxService {
 
   void initSetDate() {
     _selectedFilter = FilterType.all;
-    _from = DateConverterHelper.dateTimeForCoupon(DateTime.now().subtract(const Duration(days: 10000)));
+    _from = DateConverterHelper.dateTimeForCoupon(
+      DateTime.now().subtract(const Duration(days: 10000)),
+    );
     _to = DateConverterHelper.dateTimeForCoupon(DateTime.now());
   }
 
-  Future<void> getEarningReport({required String offset, required String? from, required String? to}) async {
+  Future<void> getEarningReport({
+    required String offset,
+    required String? from,
+    required String? to,
+  }) async {
     final formattedFrom = _convertDateFormat(from ?? '');
     final formattedTo = _convertDateFormat(to ?? '');
 
@@ -72,12 +78,13 @@ class EarningReportController extends GetxController implements GetxService {
     _isLoading = true;
     update();
 
-    final EarningReportModel? model = await earningReportServiceInterface.getEarningReport(
-      offset: int.parse(offset),
-      from: formattedFrom,
-      to: formattedTo,
-      isDelivery : AppConstants.appMode == AppMode.delivery,
-    );
+    final EarningReportModel? model = await earningReportServiceInterface
+        .getEarningReport(
+          offset: int.parse(offset),
+          from: formattedFrom,
+          to: formattedTo,
+          isDelivery: AppConstants.appMode == AppMode.delivery,
+        );
 
     if (model != null) {
       _earningReportModel = model;
@@ -102,8 +109,11 @@ class EarningReportController extends GetxController implements GetxService {
   List<Map<String, dynamic>> getEarningData() {
     return [
       {
-        'label': AppConstants.appMode == AppMode.delivery ? 'delivery_charge' : 'ride_charge',
-        'value': getEarningReportModel?.summary?.breakdown?.deliveryCharge ?? 0.0,
+        'label': AppConstants.appMode == AppMode.delivery
+            ? 'delivery_charge'
+            : 'ride_charge',
+        'value':
+            getEarningReportModel?.summary?.breakdown?.deliveryCharge ?? 0.0,
       },
       {
         'label': 'total_tips',
@@ -148,26 +158,41 @@ class EarningReportController extends GetxController implements GetxService {
   }
 
   void setFilter(String filterText) {
-    _selectedFilter = FilterType.values.firstWhere((filter) => filter.name == filterText, orElse: () => FilterType.all);
+    _selectedFilter = FilterType.values.firstWhere(
+      (filter) => filter.name == filterText,
+      orElse: () => FilterType.all,
+    );
 
     if (filterText == FilterType.all.name) {
-      _from = DateConverterHelper.dateTimeForCoupon(DateTime.now().subtract(const Duration(days: 10000)));
+      _from = DateConverterHelper.dateTimeForCoupon(
+        DateTime.now().subtract(const Duration(days: 10000)),
+      );
       _to = DateConverterHelper.dateTimeForCoupon(DateTime.now());
     } else if (filterText == FilterType.thisYear.name) {
-      _from = DateConverterHelper.dateTimeForCoupon(DateTime.now().subtract(const Duration(days: 365)));
+      _from = DateConverterHelper.dateTimeForCoupon(
+        DateTime.now().subtract(const Duration(days: 365)),
+      );
       _to = DateConverterHelper.dateTimeForCoupon(DateTime.now());
     } else if (filterText == FilterType.previousYear.name) {
       final DateTime now = DateTime.now();
-      _from = DateConverterHelper.dateTimeForCoupon(DateTime(now.year - 1, 1, 1));
-      _to = DateConverterHelper.dateTimeForCoupon(DateTime(now.year - 1, 12, 31));
+      _from = DateConverterHelper.dateTimeForCoupon(
+        DateTime(now.year - 1, 1, 1),
+      );
+      _to = DateConverterHelper.dateTimeForCoupon(
+        DateTime(now.year - 1, 12, 31),
+      );
     } else if (filterText == FilterType.thisMonth.name) {
       final DateTime now = DateTime.now();
-      _from = DateConverterHelper.dateTimeForCoupon(DateTime(now.year, now.month, 1));
+      _from = DateConverterHelper.dateTimeForCoupon(
+        DateTime(now.year, now.month, 1),
+      );
       _to = DateConverterHelper.dateTimeForCoupon(DateTime.now());
     } else if (filterText == FilterType.thisWeek.name) {
       final DateTime now = DateTime.now();
       final int currentWeekday = now.weekday;
-      _from = DateConverterHelper.dateTimeForCoupon(now.subtract(Duration(days: currentWeekday - 1)));
+      _from = DateConverterHelper.dateTimeForCoupon(
+        now.subtract(Duration(days: currentWeekday - 1)),
+      );
       _to = DateConverterHelper.dateTimeForCoupon(DateTime.now());
     }
 

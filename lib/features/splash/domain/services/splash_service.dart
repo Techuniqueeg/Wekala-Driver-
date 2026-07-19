@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:sixam_mart_delivery/features/splash/domain/repositories/splash_repository_interface.dart';
-import 'package:sixam_mart_delivery/features/splash/domain/services/splash_service_interface.dart';
+import 'package:wekala_delivery/features/splash/domain/repositories/splash_repository_interface.dart';
+import 'package:wekala_delivery/features/splash/domain/services/splash_service_interface.dart';
 
 class SplashService implements SplashServiceInterface {
   final SplashRepositoryInterface splashRepositoryInterface;
@@ -25,5 +25,4 @@ class SplashService implements SplashServiceInterface {
   bool handleInitialTopicSubscription() {
     return splashRepositoryInterface.handleInitialTopicSubscription();
   }
-
 }

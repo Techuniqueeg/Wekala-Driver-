@@ -1,8 +1,10 @@
-import 'package:sixam_mart_delivery/features/my_account/domain/models/withdraw_method_model.dart';
-import 'package:sixam_mart_delivery/features/disbursement/domain/repositories/disbursement_repository_interface.dart';
-import 'package:sixam_mart_delivery/features/disbursement/domain/models/disbursement_method_model.dart' as disburse;
-import 'package:sixam_mart_delivery/features/disbursement/domain/models/disbursement_report_model.dart' as report;
-import 'package:sixam_mart_delivery/features/disbursement/domain/services/disbursement_service_interface.dart';
+import 'package:wekala_delivery/features/my_account/domain/models/withdraw_method_model.dart';
+import 'package:wekala_delivery/features/disbursement/domain/repositories/disbursement_repository_interface.dart';
+import 'package:wekala_delivery/features/disbursement/domain/models/disbursement_method_model.dart'
+    as disburse;
+import 'package:wekala_delivery/features/disbursement/domain/models/disbursement_report_model.dart'
+    as report;
+import 'package:wekala_delivery/features/disbursement/domain/services/disbursement_service_interface.dart';
 
 class DisbursementService implements DisbursementServiceInterface {
   final DisbursementRepositoryInterface disbursementRepositoryInterface;
@@ -29,7 +31,9 @@ class DisbursementService implements DisbursementServiceInterface {
   }
 
   @override
-  Future<report.DisbursementReportModel?> getDisbursementReport(int offset) async {
+  Future<report.DisbursementReportModel?> getDisbursementReport(
+    int offset,
+  ) async {
     return await disbursementRepositoryInterface.getDisbursementReport(offset);
   }
 
@@ -42,5 +46,4 @@ class DisbursementService implements DisbursementServiceInterface {
   Future<bool> createWithdrawRequest(Map<String?, dynamic> data) async {
     return await disbursementRepositoryInterface.createWithdrawRequest(data);
   }
-
 }

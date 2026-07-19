@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:sixam_mart_delivery/common/widgets/custom_asset_image_widget.dart';
-import 'package:sixam_mart_delivery/helper/price_converter_helper.dart';
-import 'package:sixam_mart_delivery/util/app_constants.dart';
-import 'package:sixam_mart_delivery/util/dimensions.dart';
-import 'package:sixam_mart_delivery/util/enums.dart';
-import 'package:sixam_mart_delivery/util/images.dart';
-import 'package:sixam_mart_delivery/util/styles.dart';
-
+import 'package:wekala_delivery/common/widgets/custom_asset_image_widget.dart';
+import 'package:wekala_delivery/helper/price_converter_helper.dart';
+import 'package:wekala_delivery/util/app_constants.dart';
+import 'package:wekala_delivery/util/dimensions.dart';
+import 'package:wekala_delivery/util/enums.dart';
+import 'package:wekala_delivery/util/images.dart';
+import 'package:wekala_delivery/util/styles.dart';
 
 class OrderRow {
   final String label;
@@ -32,8 +31,6 @@ class OrderCard extends StatelessWidget {
   final List<OrderRow> rows;
   final String netProfitLabel;
   final double netProfitValue;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,25 +67,38 @@ class OrderCard extends StatelessWidget {
                 RichText(
                   textAlign: TextAlign.start,
                   text: TextSpan(
-                    style: robotoBlack.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyMedium?.color),
+                    style: robotoBlack.copyWith(
+                      fontSize: Dimensions.fontSizeSmall,
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                    ),
                     children: [
                       TextSpan(
-                        text: (AppConstants.appMode == AppMode.delivery ? 'order' : 'ride').tr,
-                        style: robotoRegular.copyWith(color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha(200)),
+                        text:
+                            (AppConstants.appMode == AppMode.delivery
+                                    ? 'order'
+                                    : 'ride')
+                                .tr,
+                        style: robotoRegular.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.color?.withAlpha(200),
+                        ),
                       ),
-                      TextSpan(
-                        text: ' $orderId',
-                      ),
+                      TextSpan(text: ' $orderId'),
                     ],
                   ),
                 ),
-                SizedBox(width: Dimensions.paddingSizeDefault,),
+                SizedBox(width: Dimensions.paddingSizeDefault),
                 Text(dateTime.tr),
               ],
             ),
           ),
 
-          Divider(height: 1, thickness: 1, color: Theme.of(context).disabledColor.withAlpha(100)),
+          Divider(
+            height: 1,
+            thickness: 1,
+            color: Theme.of(context).disabledColor.withAlpha(100),
+          ),
 
           // ── ONE Table covers ALL rows including Net Profit ─────────────
           //
@@ -110,54 +120,103 @@ class OrderCard extends StatelessWidget {
               final row = allRows[i];
               final isNetProfit = i == lastIndex;
 
-              final labelStyle = robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha(200));
-              final valueStyle = isNetProfit ? robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault, color: Theme.of(context).primaryColor) : robotoBold.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).textTheme.bodyMedium?.color?.withAlpha(200));
+              final labelStyle = robotoRegular.copyWith(
+                fontSize: Dimensions.fontSizeSmall,
+                color: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.color?.withAlpha(200),
+              );
+              final valueStyle = isNetProfit
+                  ? robotoBold.copyWith(
+                      fontSize: Dimensions.fontSizeDefault,
+                      color: Theme.of(context).primaryColor,
+                    )
+                  : robotoBold.copyWith(
+                      fontSize: Dimensions.fontSizeSmall,
+                      color: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.color?.withAlpha(200),
+                    );
 
               final double topPad = isNetProfit
                   ? Dimensions.paddingSizeDefault
-                  : (i == 0 ? Dimensions.paddingSizeDefault : Dimensions.fontSizeExtraSmall);
+                  : (i == 0
+                        ? Dimensions.paddingSizeDefault
+                        : Dimensions.fontSizeExtraSmall);
 
               final double bottomPad = isNetProfit
                   ? Dimensions.paddingSizeDefault
                   : Dimensions.paddingSizeExtraSmall;
 
               return TableRow(
-                decoration: isNetProfit ? BoxDecoration(color: Theme.of(context).hintColor.withAlpha(10)) : null,
+                decoration: isNetProfit
+                    ? BoxDecoration(
+                        color: Theme.of(context).hintColor.withAlpha(10),
+                      )
+                    : null,
                 children: [
                   // Label
-                  isNetProfit ? Padding(
-                    padding: EdgeInsets.only(left : Dimensions.paddingSizeDefault, top: topPad, bottom: bottomPad,),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(row.label.tr, style: labelStyle),
-                        const SizedBox(width: 4),
-                        Tooltip(
-                          message: '${'net_income'.tr} = ${'total_earning'.tr} - ${'total_expense'.tr}',
-                          triggerMode: TooltipTriggerMode.tap,
-                          waitDuration: Duration.zero,
-                          showDuration: const Duration(seconds: 3),
-                          child: CustomAssetImageWidget(image: Images.noteIcon, color: Theme.of(context).hintColor, height: Dimensions.fontSizeSmall, width: Dimensions.fontSizeSmall,),
+                  isNetProfit
+                      ? Padding(
+                          padding: EdgeInsets.only(
+                            left: Dimensions.paddingSizeDefault,
+                            top: topPad,
+                            bottom: bottomPad,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(row.label.tr, style: labelStyle),
+                              const SizedBox(width: 4),
+                              Tooltip(
+                                message:
+                                    '${'net_income'.tr} = ${'total_earning'.tr} - ${'total_expense'.tr}',
+                                triggerMode: TooltipTriggerMode.tap,
+                                waitDuration: Duration.zero,
+                                showDuration: const Duration(seconds: 3),
+                                child: CustomAssetImageWidget(
+                                  image: Images.noteIcon,
+                                  color: Theme.of(context).hintColor,
+                                  height: Dimensions.fontSizeSmall,
+                                  width: Dimensions.fontSizeSmall,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(
+                            left: Dimensions.paddingSizeDefault,
+                            top: topPad,
+                            bottom: bottomPad,
+                          ),
+                          child: Text(row.label.tr, style: labelStyle),
                         ),
-                      ],
-                    ),
-                  ) : Padding(
-                    padding: EdgeInsets.only(left: Dimensions.paddingSizeDefault, top: topPad, bottom: bottomPad,),
-                    child: Text(row.label.tr, style: labelStyle),
-                  ),
 
                   // Colon
                   Padding(
-                    padding: EdgeInsets.only(left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: topPad, bottom: bottomPad,),
+                    padding: EdgeInsets.only(
+                      left: Dimensions.paddingSizeDefault,
+                      right: Dimensions.paddingSizeDefault,
+                      top: topPad,
+                      bottom: bottomPad,
+                    ),
                     child: Text(' : ', style: labelStyle),
                   ),
 
                   // Value
                   Padding(
-                    padding: EdgeInsets.only(right: Dimensions.paddingSizeDefault, top: topPad, bottom: bottomPad,),
+                    padding: EdgeInsets.only(
+                      right: Dimensions.paddingSizeDefault,
+                      top: topPad,
+                      bottom: bottomPad,
+                    ),
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text(PriceConverterHelper.convertPrice(row.value), style: valueStyle),
+                      child: Text(
+                        PriceConverterHelper.convertPrice(row.value),
+                        style: valueStyle,
+                      ),
                     ),
                   ),
                 ],
