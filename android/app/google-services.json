@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "651856058825-d6gb1v2ne6um30bkvmv01ab8avbimol2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wekala.delivery",
+            "certificate_hash": "99accf0b741a335bc9561ef170ad94d0fc73c0ed"
+          }
+        },
+        {
           "client_id": "651856058825-tu0gghqlo1pq2ue1uoc6mgjeld8q9ikq.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -50,6 +58,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "651856058825-60hpl9bmmn6aboqm3u4ijjgespbj8qld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wekala.user",
+            "certificate_hash": "99accf0b741a335bc9561ef170ad94d0fc73c0ed"
+          }
+        },
+        {
           "client_id": "651856058825-tu0gghqlo1pq2ue1uoc6mgjeld8q9ikq.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -85,6 +101,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "651856058825-d16eikau1u24k9uqeugc22raqnh951s7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wekala.vendor",
+            "certificate_hash": "99accf0b741a335bc9561ef170ad94d0fc73c0ed"
+          }
+        },
         {
           "client_id": "651856058825-tu0gghqlo1pq2ue1uoc6mgjeld8q9ikq.apps.googleusercontent.com",
           "client_type": 3
